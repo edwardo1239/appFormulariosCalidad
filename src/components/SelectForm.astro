@@ -1,0 +1,33 @@
+---
+interface Props {
+    label: string
+    options: string[]
+    id: string
+}
+
+const { label, options, id } = Astro.props
+---
+
+<label>
+    {label}
+    <select id={id}>
+        {options.map(item => 
+        <option value={item}>{item}</option>)}
+        
+    </select>
+</label>
+
+<style>
+    label{
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        gap: 2px;
+
+
+    }
+    select{
+        padding: 5px;
+        border-radius: 8px;
+    }
+</style>

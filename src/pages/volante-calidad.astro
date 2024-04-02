@@ -1,0 +1,93 @@
+---
+import SelectForm from "../components/SelectForm.astro";
+import InputForm from "../components/InputForm.astro";
+import Layout from "../layouts/Layout.astro";
+
+const tipoFruta = ["Naranja", "Limon"];
+const operarios = ["data"];
+---
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const response = await fetch("http://192.168.0.172:3000/getOperarios");
+        const data = await response.json();
+        const operarios = data.response.data
+
+        const selectElement = document.getElementById("nombre_operario") as HTMLElement
+        operarios.forEach((element: any) => {
+            const optionElement = document.createElement("option");
+            optionElement.value = element.id;
+            optionElement.textContent = `${element.nombre} ${element.apellido}`
+            selectElement.appendChild(optionElement);
+        });  
+    });
+</script>
+
+<Layout title="Volante Calidad">
+    <form action="submit" id="formulario-volante-calidad">
+        <h2>Volante Calidad</h2>
+        <SelectForm label="Tipo de fruta" options={tipoFruta} id="tipo_fruta" />
+        <SelectForm
+            label="Nombre del operario"
+            options={operarios}
+            id="nombre_operario"
+        />
+        <InputForm label="Unidades revisadas" id="unidades_revisadas" />
+        <InputForm label="Numero de defectos" id="numero_defectos" />
+        <button id="boton-guardar-formulario-volante-calidad" type="submit">Guardar</button>
+    </form>
+</Layout>
+
+<script>
+    const formulario = document.getElementById("formulario-volante-calidad",) as HTMLFormElement;
+    formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const unidadesRevisadas = document.getElementById("unidades_revisadas",) as HTMLInputElement;
+        const numeroDefectos = document.getElementById("numero_defectos",) as HTMLInputElement;
+        const id = document.getElementById("nombre_operario",) as HTMLInputElement;
+        const tipoFruta = document.getElementById("tipo_fruta",) as HTMLInputElement;
+        const response = await fetch("http://192.168.0.172:3000/ingresar-volante-calidad", {
+            method:"POST",
+            body: JSON.stringify({
+                id:Number(id.value),
+                tipoFruta: tipoFruta.value,
+                unidadesRevisadas: Number(unidadesRevisadas.value),
+                numeroDefectos: Number(numeroDefectos.value)
+            })
+        })
+        if(response.status === 200){
+            alert("Datos guardados con exito")
+            unidadesRevisadas.value = "";
+            numeroDefectos.value = "";
+            id.value = "";
+            tipoFruta.value = "";
+        } else {
+            alert("Error guardando los datos")
+        }
+    });
+</script>
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+        height: 100%;
+
+        background-image: url("../assets/img-naranjas-limones-celifrut.png");
+        background-size: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    button {
+        padding: 5px;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        margin-top: 10px;
+        border-radius: 8px;
+        background-color: #7d9f3a;
+    }
+</style>

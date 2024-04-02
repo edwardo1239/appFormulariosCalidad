@@ -1,0 +1,28 @@
+---
+interface Props {
+    label: string
+    id:string
+}
+
+const { label, id } = Astro.props
+---
+
+<label>
+    {label}
+    <input type="text" id={id}>
+</label>
+
+
+<style>
+    label{
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        gap: 2px;
+        width: auto;
+    }
+    input{
+        padding: 5px;
+        border-radius: 8px;
+    }
+</style>
