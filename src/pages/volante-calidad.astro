@@ -9,7 +9,7 @@ const operarios = ["data"];
 
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        const response = await fetch("http://192.168.0.172:3000/getOperarios");
+        const response = await fetch("http://192.168.0.172:3004/getSeleccionadoras");
         const data = await response.json();
         const operarios = data.response.data
 
@@ -46,7 +46,7 @@ const operarios = ["data"];
         const numeroDefectos = document.getElementById("numero_defectos",) as HTMLInputElement;
         const id = document.getElementById("nombre_operario",) as HTMLInputElement;
         const tipoFruta = document.getElementById("tipo_fruta",) as HTMLInputElement;
-        const response = await fetch("http://192.168.0.172:3000/ingresar-volante-calidad", {
+        const response = await fetch("http://192.168.0.172:3004/ingresar-volante-calidad", {
             method:"POST",
             body: JSON.stringify({
                 id:Number(id.value),
