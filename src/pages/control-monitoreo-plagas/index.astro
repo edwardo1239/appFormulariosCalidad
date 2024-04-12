@@ -1,0 +1,45 @@
+---
+import MainButton from "../../components/MainButton.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Celifrut">
+	<nav>
+        <h2>Control y monitoreo de plagas</h2>
+        <MainButton href="/control-monitoreo-plagas/control">
+            <p slot="label">Control</p>
+            <svg  slot="icon"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-gamepad"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" /><path d="M6 12h4m-2 -2v4" /><path d="M15 11l0 .01" /><path d="M18 13l0 .01" /></svg>
+        </MainButton>
+		<MainButton href="/control-monitoreo-plagas/cebo">
+            <p slot="label">Cebo</p>
+			<svg  slot="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-skull"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 4c4.418 0 8 3.358 8 7.5c0 1.901 -.755 3.637 -2 4.96l0 2.54a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-2.54c-1.245 -1.322 -2 -3.058 -2 -4.96c0 -4.142 3.582 -7.5 8 -7.5z" /><path d="M10 17v3" /><path d="M14 17v3" /><path d="M9 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M15 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+        </MainButton>
+		<MainButton href="/control-monitoreo-plagas/hallazgos">
+            <p slot="label">Hallazgos</p>
+			<svg slot="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+        </MainButton>
+	</nav>
+</Layout>
+
+<style>
+	nav {
+		width: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		align-items: center;
+		padding: 18px;
+		height: 100%;
+		background-image: url("../../assets/img-naranjas-limones-celifrut.png");
+		background-size: auto;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+    h2{
+        background-color: white;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        
+    }
+</style>

@@ -2,14 +2,15 @@
 interface Props {
     label: string
     id:string
+    clase?:string
 }
 
-const { label, id } = Astro.props
+const { label, id, clase="" } = Astro.props
 ---
 
 <label>
     {label}
-    <input type="text" id={id}>
+    <input type="text" id={id} class={clase} >
 </label>
 
 
