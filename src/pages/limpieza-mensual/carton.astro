@@ -1,0 +1,138 @@
+---
+import InputCheckboxForm from "../../components/InputCheckboxForm.astro";
+import InputForm from "../../components/InputForm.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const headers = [
+    "Pisos, estibas",
+    "Estibadores"
+];
+
+const ids = [
+   "pisos",
+   "estibadores"
+];
+---
+
+<Layout title="Almacenamiento carton">
+    <form action="submit" id="formulario-limpieza-mensual-carton">
+        <section>
+            <a href="/limpieza-mensual/">
+                <svg  width="28"  height="28"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
+            </a>
+            <h2>Area almacenamiento de carton</h2>
+        </section>
+   
+        <InputForm label="Responsable" id="Responsable-limpieza-mensual-carton" />
+        {
+            headers.map((item, index) => (
+                <>
+                    <div>
+                        <InputCheckboxForm
+                            label={item}
+                            id={"formato-limpieza-mensual-carton-" + ids[index]}
+                            name={ids[index]}
+                            clase="formato-limpieza-mensual-carton-checkbox"
+                        />
+                        <InputForm
+                            label="Observaciónes:"
+                            id={ "formato-limpieza-mensual-carton-" + ids[index] + "-observacion"}
+                            clase="formato-limpieza-mensual-carton-observaciones"
+                        />
+                    </div>
+                    <hr />
+                </>
+            ))
+        }
+        <button
+            id="boton-guardar-formulario-limpieza-mensual-carton"
+            type="submit">Guardar</button>
+    </form>
+</Layout>
+
+<script>
+    const formulario = document.getElementById("formulario-limpieza-mensual-carton",) as HTMLFormElement;
+    formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
+    try {
+        const responsable = document.getElementById("Responsable-limpieza-mensual-carton",) as HTMLInputElement;
+        const elementos_check = document.getElementsByClassName("formato-limpieza-mensual-carton-checkbox") as HTMLCollectionOf<HTMLInputElement>;
+        const observaciones = document.getElementsByClassName("formato-limpieza-mensual-carton-observaciones");
+        const data = [];
+        for (let i = 0; i < observaciones.length; i++) {
+            data.push({
+                elemento: elementos_check[i].name,
+                cumple: (elementos_check[i] as HTMLInputElement).checked,
+                observaciones: (observaciones[i] as HTMLInputElement).value,
+                area:"carton"
+            });
+        }
+        const response = await fetch("http://192.168.0.172:3004/ingresar-limpieza-mensual", {
+            method:"POST",
+            body: JSON.stringify({data:data, responsable: responsable.value})
+        })
+        if(response.status === 200){
+            alert("Datos guardados con exito")
+            for (let i = 0; i < observaciones.length; i++) {
+            if (elementos_check[i] instanceof HTMLInputElement && 
+                observaciones[i] instanceof HTMLInputElement 
+            ) {
+                (elementos_check[i] as HTMLInputElement).checked = false;
+                (observaciones[i] as HTMLInputElement).value = "";
+            }
+        }
+
+        } else {
+            alert("Error guardando los datos")
+        }
+    } catch (e) {
+        if (e instanceof Error)
+            alert("Error guardando los datos" + e.message);
+    }
+    });
+</script>
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+        height: 100%;
+
+        background-image: url("../../assets/img-naranjas-limones-celifrut.png");
+        background-size: auto;
+        background-position: center;
+        background-repeat: repeat;
+    }
+
+    div {
+        background-color: #7d9f3a;
+        padding: 15px;
+        border-radius: 18px;
+        box-shadow:
+            rgba(0, 0, 0, 0.16) 0px 1px 4px,
+            rgb(51, 51, 51) 0px 0px 0px 3px;
+    }
+    button {
+        padding: 5px;
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+        margin-top: 10px;
+        border-radius: 8px;
+        background-color: #7d9f3a;
+    }
+    a{
+        background-color: white;
+        text-decoration: none;
+        display: flex;
+        width: 50px;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 18px;
+        border-radius: 18px;
+        color: black;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    }
+</style>
